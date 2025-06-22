@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "gork-bot"
+version = "0.1.0"
+description = "A sarcastic and snarky bot inspired by Grok that explains previous messages"
+authors = ["Mihir Arya <mihir@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.13"
+fastapi = {extras = ["standard"], version = ">=0.115.13,<0.116.0"}
+uvicorn = {extras = ["standard"], version = ">=0.24.0"}
+requests = ">=2.31.0"
+openai = ">=1.0.0"
+pydantic = ">=2.0.0"
+python-multipart = ">=0.0.6"
+python-dotenv = ">=1.0.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api" 
