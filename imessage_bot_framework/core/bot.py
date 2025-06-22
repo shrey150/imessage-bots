@@ -144,7 +144,19 @@ class Bot:
             # Apply middleware
             for middleware_func in self.middleware:
                 try:
-                    result = middleware_func(message, self._run_handlers)
+                    # Create a synchronous wrapper for next handler
+                    def next_handler(msg):
+                        # Run handlers synchronously and return result
+                        for handler in self.message_handlers:
+                            try:
+                                result = handler(msg)
+                                if result is not None:
+                                    return result
+                            except Exception as e:
+                                logger.error(f"Error in handler {handler.__name__}: {e}")
+                        return None
+                    
+                    result = middleware_func(message, next_handler)
                     if result is not None:
                         # Middleware returned a response, send it
                         if isinstance(result, str):
