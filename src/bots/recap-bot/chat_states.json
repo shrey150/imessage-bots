@@ -1,0 +1,56 @@
+{
+  "chat-+14083866869": {
+    "chat_guid": "chat-+14083866869",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 1,
+    "total_messages_seen": 1,
+    "created_at": "2025-06-21T19:01:40.159418",
+    "updated_at": "2025-06-21T19:01:43.831266"
+  },
+  "iMessage;-;+14083866869": {
+    "chat_guid": "iMessage;-;+14083866869",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 27,
+    "total_messages_seen": 27,
+    "created_at": "2025-06-21T19:09:22.065599",
+    "updated_at": "2025-06-21T20:12:39.650865"
+  },
+  "iMessage;-;+19254402271": {
+    "chat_guid": "iMessage;-;+19254402271",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 2,
+    "total_messages_seen": 2,
+    "created_at": "2025-06-21T19:09:22.065599",
+    "updated_at": "2025-06-21T19:59:21.715407"
+  },
+  "iMessage;-;+19717706994": {
+    "chat_guid": "iMessage;-;+19717706994",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 19,
+    "total_messages_seen": 19,
+    "created_at": "2025-06-21T19:21:29.230635",
+    "updated_at": "2025-06-21T20:23:20.413239"
+  },
+  "iMessage;-;+19258199097": {
+    "chat_guid": "iMessage;-;+19258199097",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 5,
+    "total_messages_seen": 5,
+    "created_at": "2025-06-21T19:21:29.230635",
+    "updated_at": "2025-06-21T20:25:24.590609"
+  },
+  "iMessage;+;chat932751998708437173": {
+    "chat_guid": "iMessage;+;chat932751998708437173",
+    "last_read_message_guid": null,
+    "last_read_timestamp": null,
+    "unread_count": 6,
+    "total_messages_seen": 6,
+    "created_at": "2025-06-21T19:21:29.230635",
+    "updated_at": "2025-06-21T19:43:20.344074"
+  }
+}
