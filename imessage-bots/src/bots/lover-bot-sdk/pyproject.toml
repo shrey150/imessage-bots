@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "lover-bot-sdk"
+version = "2.0.0"
+description = "An AI girlfriend bot built with the iMessage Bot Framework"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+openai = "^1.0.0"
+python-dotenv = "^1.0.0"
+imessage-bot-framework = {path = "../../../../", develop = true}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0.0"
+black = "^23.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api" 
