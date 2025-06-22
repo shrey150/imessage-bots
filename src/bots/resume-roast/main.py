@@ -164,7 +164,7 @@ async def handle_linkedin_request(chat_guid: str, message_text: str, conversatio
                 linkedin_url=linkedin_url
             )
             
-            await send_message(chat_guid, "aight. please wait while you waste my time... 🕵️‍♂️💼")
+            await send_message(chat_guid, "aight. please wait while you waste my time...")
             
             # Process the LinkedIn profile
             await process_linkedin_profile(chat_guid, linkedin_url)
