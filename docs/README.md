@@ -1,10 +1,10 @@
-# iMessage Bot Framework Documentation
+# Bluely Framework Documentation
 
-Welcome to the comprehensive documentation for the **iMessage Bot Framework** - a Python SDK that makes building iMessage bots simple and powerful.
+Welcome to the comprehensive documentation for **Bluely** - a Python SDK that makes building AI-native iMessage bots simple and powerful.
 
-## 🌟 What is iMessage Bot Framework?
+## 🌟 What is Bluely?
 
-The iMessage Bot Framework is a modern Python SDK that simplifies creating intelligent iMessage bots by abstracting away the complexity of BlueBubbles webhook handling while providing full access to advanced features when needed.
+Bluely is a modern Python SDK that simplifies creating intelligent iMessage bots by abstracting away the complexity of BlueBubbles webhook handling while providing full access to advanced features when needed.
 
 ## 📚 Documentation Structure
 
