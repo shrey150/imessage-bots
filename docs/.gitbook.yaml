@@ -1,0 +1,66 @@
+root: ./
+
+# Table of contents
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
+# GitBook configuration
+title: iMessage Bot Framework Documentation
+description: Comprehensive documentation for the iMessage Bot Framework - a Python SDK for building intelligent iMessage bots
+
+# Site configuration
+site:
+  title: iMessage Bot Framework
+  description: Build intelligent iMessage bots with Python
+  url: https://docs.imessage-bot-framework.com
+
+# Content configuration
+content:
+  # Enable/disable features
+  markdown:
+    syntax_highlighting: true
+    line_numbers: true
+    copy_code: true
+  
+  # Code syntax highlighting theme
+  theme:
+    primary_color: "#007AFF"  # iOS blue
+    accent_color: "#34C759"   # iOS green
+
+# PDF export configuration
+pdf:
+  page_size: a4
+  margin:
+    top: 56
+    bottom: 56
+    left: 62
+    right: 62
+  header_template: |
+    <div style="font-size:9px; color:#999; width:100%; text-align:center;">
+      iMessage Bot Framework Documentation
+    </div>
+  footer_template: |
+    <div style="font-size:9px; color:#999; width:100%; text-align:center;">
+      Page <span class="pageNumber"></span> of <span class="totalPages"></span>
+    </div>
+
+# Plugin configuration  
+plugins:
+  - search
+  - code
+  - sharing
+  - github
+  - anchor-navigation
+  - ga
+
+# Plugin settings
+pluginsConfig:
+  github:
+    url: https://github.com/your-org/imessage-bot-framework
+  ga:
+    token: "UA-XXXXXXXX-X"  # Replace with your Google Analytics ID
+  
+# Custom redirects (if needed)
+redirects:
+  "/old-path": "/new-path" 
