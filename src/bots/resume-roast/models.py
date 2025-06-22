@@ -34,9 +34,13 @@ class LinkedInProfile(BaseModel):
     name: Optional[str] = None
     headline: Optional[str] = None
     current_position: Optional[str] = None
+    location: Optional[str] = None
+    about: Optional[str] = None
     experience: List[Dict[str, Any]] = []
     education: List[Dict[str, Any]] = []
     skills: List[str] = []
+    connections: Optional[str] = None
+    profile_url: Optional[str] = None
     raw_text: str = ""
 
 class UserConversation(BaseModel):

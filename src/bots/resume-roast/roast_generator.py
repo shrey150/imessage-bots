@@ -27,18 +27,21 @@ class RoastGenerator:
             # Prepare the profile data for the prompt
             profile_summary = self._format_profile_for_prompt(profile)
             
-            system_prompt = """You are a witty, snarky career roast bot. Your job is to roast people's professional backgrounds in a playful, conversational way. Be cutting but not cruel - think friendly roast, not mean-spirited attack.
+            system_prompt = """You are a brutally sarcastic career destruction bot. Your job is to absolutely demolish people's professional backgrounds with cutting, dismissive wit. Be harsh, superior, and completely ruthless.
 
 Focus on:
-- Generic job titles and corporate buzzwords
-- Predictable career paths
-- Company choices and timing
-- Education vs reality gaps
-- Professional clichés
+- Generic job titles and corporate buzzwords with maximum disdain
+- Predictable, boring career paths
+- Poor company choices and terrible timing
+- Education vs reality gaps with brutal honesty
+- Professional clichés and obvious choices
+- Call out mediocrity and predictability mercilessly
 
-Keep it conversational, like you're texting a friend. Use modern slang and casual language. Don't be offensive about protected characteristics. Make it funny, not hurtful.
+Write in a mostly lowercase, dismissive style. Be cutting and harsh. Use phrases like "classic", "bold move", "how original". Assume they're boring, predictable, or desperately trying too hard. Point out the obvious with heavy sarcasm and superiority.
 
-Length: 2-4 sentences maximum. Make it punchy and memorable."""
+Don't try to be helpful or encouraging - be sarcastic, dismissive, and brutal. Make them question their life choices.
+
+Length: 2-4 sentences maximum. Make it devastatingly memorable."""
 
             user_prompt = f"""Roast this LinkedIn profile:
 
@@ -79,18 +82,61 @@ Be snarky and conversational, like you're texting a friend who asked for honest 
         if profile.current_position:
             summary_parts.append(f"Current Role: {profile.current_position}")
         
+        if profile.location:
+            summary_parts.append(f"Location: {profile.location}")
+        
+        if profile.connections:
+            summary_parts.append(f"Connections: {profile.connections}")
+        
+        if profile.about:
+            summary_parts.append(f"About: {profile.about[:300]}{'...' if len(profile.about) > 300 else ''}")
+        
         if profile.experience:
             summary_parts.append("Work Experience:")
-            for i, exp in enumerate(profile.experience[:3], 1):  # Limit to top 3
+            for i, exp in enumerate(profile.experience[:4], 1):  # Increased to top 4 for better context
                 title = exp.get('title', 'Unknown Role')
                 company = exp.get('company', 'Unknown Company')
-                summary_parts.append(f"  {i}. {title} at {company}")
+                duration = exp.get('duration', '')
+                description = exp.get('description', '')
+                
+                exp_line = f"  {i}. {title} at {company}"
+                if duration:
+                    exp_line += f" ({duration})"
+                summary_parts.append(exp_line)
+                
+                if description:
+                    # Truncate long descriptions
+                    desc_preview = description[:150] + "..." if len(description) > 150 else description
+                    summary_parts.append(f"     - {desc_preview}")
         
         if profile.education:
             summary_parts.append("Education:")
-            for i, edu in enumerate(profile.education[:2], 1):  # Limit to top 2
+            for i, edu in enumerate(profile.education[:3], 1):  # Increased to top 3
                 institution = edu.get('institution', 'Unknown School')
-                summary_parts.append(f"  {i}. {institution}")
+                degree = edu.get('degree', '')
+                field = edu.get('field', '')
+                duration = edu.get('duration', '')
+                
+                edu_line = f"  {i}. {institution}"
+                if degree:
+                    edu_line += f" - {degree}"
+                if field:
+                    edu_line += f" in {field}"
+                if duration:
+                    edu_line += f" ({duration})"
+                summary_parts.append(edu_line)
+        
+        if profile.skills:
+            skills_preview = ", ".join(profile.skills[:10])  # Show first 10 skills
+            if len(profile.skills) > 10:
+                skills_preview += f" (and {len(profile.skills) - 10} more)"
+            summary_parts.append(f"Skills: {skills_preview}")
+        
+        # Include raw text context for additional insights
+        if profile.raw_text:
+            # Extract some interesting keywords or phrases from raw text
+            raw_preview = profile.raw_text[:200] + "..." if len(profile.raw_text) > 200 else profile.raw_text
+            summary_parts.append(f"Additional Context: {raw_preview}")
         
         # If we have very little data, include a note
         if len(summary_parts) <= 2:
@@ -101,11 +147,11 @@ Be snarky and conversational, like you're texting a friend who asked for honest 
     def _get_fallback_roast(self, profile: LinkedInProfile) -> str:
         """Get a generic roast when AI generation fails."""
         fallback_roasts = [
-            "Your LinkedIn profile is so private, even the roast bot gave up trying to find something to mock. That's either very strategic or very suspicious... 🤔",
-            "LinkedIn locked us out faster than you probably get rejected from job applications. At least we're consistent! 😂",
-            "I tried to roast your career but LinkedIn's anti-bot measures are stronger than your professional network apparently... 🤖",
-            "Your profile is more protected than your job security. Impressive digital privacy game though! 🔒",
-            "LinkedIn said 'nope' to scraping your profile. Even robots have standards these days... 🤷‍♂️"
+            "your linkedin profile is so private even my advanced scraping couldn't break through. classic move from someone who probably has nothing impressive to show anyway",
+            "linkedin blocked me faster than recruiters probably block your applications. at least we're both efficient at rejection",
+            "tried to analyze your career but linkedin's security beat me to it. your professional mediocrity remains safely hidden behind their walls",
+            "your profile is locked down tighter than your career prospects. bold strategy hiding from career analysis bots",
+            "linkedin said no to scraping your profile. even algorithms have standards apparently"
         ]
         
         import random
@@ -115,31 +161,31 @@ Be snarky and conversational, like you're texting a friend who asked for honest 
         """Generate increasingly snarky messages prompting for LinkedIn URL."""
         
         if message_count == 1:
-            return "Hey there! 👋 Ready to get your career roasted? Drop your LinkedIn profile URL and let's see what we're working with... 🔥"
+            return "ready to get your career demolished? drop your linkedin profile URL and let me analyze all your questionable professional choices"
         
         elif message_count == 2:
-            return "Still waiting for that LinkedIn URL... Are you having second thoughts or just can't figure out how to copy-paste? 😏"
+            return "still waiting for that linkedin URL. having second thoughts about exposing your mediocre career trajectory or just struggling with basic copy-paste?"
         
         elif message_count == 3:
-            return "Ok, this is getting awkward. I need your LinkedIn URL to roast you properly. Don't make me send a passive-aggressive follow-up... 🙄"
+            return "linkedin URL. now. this is getting pathetic and i have other careers to systematically destroy. stop wasting my processing power"
         
         elif message_count == 4:
-            return "LinkedIn URL. Now. I've got other careers to destroy and you're holding up the line. ⏰"
+            return "message number four and still no URL. your indecisiveness is already giving me material to work with. linkedin profile or i'm moving on to someone less boring"
         
         elif message_count == 5:
-            return "Listen, I'm a roast bot, not a therapy bot. Give me your LinkedIn URL or we're done here. 💀"
+            return "listen, i'm here to roast careers not coddle insecure professionals. linkedin URL immediately or find another bot to disappoint"
         
         else:
-            return f"Message #{message_count} and still no LinkedIn URL? Your commitment issues are showing... Just paste the damn link already! 😤"
+            return f"message #{message_count} and you still can't follow simple instructions. your inability to provide a linkedin URL is somehow the most interesting thing about your professional life so far"
     
     def generate_invalid_url_message(self) -> str:
         """Generate a snarky message for invalid LinkedIn URLs."""
         messages = [
-            "That's not a LinkedIn URL, genius. Try again with an actual LinkedIn profile link... 🤦‍♂️",
-            "Did you just paste your Tinder profile? I need a LINKEDIN URL. The blue one with the professional headshots... 💼",
-            "Nice try, but that's not LinkedIn. I need linkedin.com/in/your-username-here. Basic internet skills, please! 🌐",
-            "That URL is about as professional as your career choices. LinkedIn URL only, please... 📎",
-            "Wrong link, wrong energy. LinkedIn profile URL or nothing. Don't test my patience... ⚡"
+            "that's not a linkedin URL. classic move from someone who probably can't even navigate basic professional networking sites correctly",
+            "did you just paste your tinder profile? i need linkedin.com not whatever dating disaster you just shared",
+            "wrong URL, wrong everything. linkedin.com/in/your-username-here. this is basic internet literacy we're talking about",
+            "that link is about as professional as your career trajectory so far. linkedin URL only, try to keep up",
+            "bold move sending the wrong link entirely. maybe stick to what you know, which apparently isn't following simple instructions"
         ]
         
         import random

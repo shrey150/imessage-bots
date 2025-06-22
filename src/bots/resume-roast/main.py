@@ -12,7 +12,7 @@ import uvicorn
 from config import config
 from models import WebhookData, ConversationState
 from conversation_state import conversation_manager
-from linkedin_scraper import linkedin_scraper
+from stagehand_scraper import stagehand_linkedin_scraper
 from roast_generator import roast_generator
 
 # Configure logging
@@ -91,6 +91,11 @@ async def handle_webhook(webhook_data: WebhookData, background_tasks: Background
         chat_guid = message.chats[0].guid
         message_text = message.text or ""
         
+        # Only process messages from the configured chat
+        if chat_guid != config.CHAT_GUID:
+            logger.info(f"Ignoring message from chat {chat_guid} (not configured chat)")
+            return {"status": "ignored", "reason": "not from configured chat"}
+        
         logger.info(f"Processing message from chat {chat_guid}: {message_text[:50]}...")
         
         # Process the message in the background
@@ -148,7 +153,7 @@ async def handle_linkedin_request(chat_guid: str, message_text: str, conversatio
                 linkedin_url = url
                 break
         
-        if linkedin_url and linkedin_scraper.is_valid_linkedin_url(linkedin_url):
+        if linkedin_url and stagehand_linkedin_scraper.is_valid_linkedin_url(linkedin_url):
             # Valid LinkedIn URL found - start processing
             logger.info(f"Valid LinkedIn URL received: {linkedin_url}")
             
@@ -159,7 +164,7 @@ async def handle_linkedin_request(chat_guid: str, message_text: str, conversatio
                 linkedin_url=linkedin_url
             )
             
-            await send_message(chat_guid, "Alright, let me dig into this profile and find all your questionable life choices... 🕵️‍♂️💼")
+            await send_message(chat_guid, "aight. please wait while you waste my time... 🕵️‍♂️💼")
             
             # Process the LinkedIn profile
             await process_linkedin_profile(chat_guid, linkedin_url)
@@ -186,8 +191,11 @@ async def process_linkedin_profile(chat_guid: str, linkedin_url: str):
     try:
         logger.info(f"Starting LinkedIn profile analysis for: {linkedin_url}")
         
-        # Scrape the LinkedIn profile
-        profile = linkedin_scraper.scrape_profile(linkedin_url)
+        # Scrape the LinkedIn profile using Stagehand
+        profile = await stagehand_linkedin_scraper.scrape_profile(linkedin_url)
+        
+        logger.info(f"Scraper returned profile: {profile}")
+        logger.info(f"Profile type: {type(profile)}")
         
         if not profile:
             logger.warning(f"Failed to scrape LinkedIn profile: {linkedin_url}")
