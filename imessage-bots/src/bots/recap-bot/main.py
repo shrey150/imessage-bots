@@ -216,8 +216,9 @@ async def process_recap_request(chat_guid: str, message_text: str):
         # Filter out messages from the user (we don't need to recap our own messages)
         messages_to_summarize = [msg for msg in processed_messages if not msg.is_from_user]
         
-        # Limit to the requested message count after filtering
-        messages_to_summarize = messages_to_summarize[:message_count]
+        # Get the most recent messages by taking from the end (since they're sorted oldest first)
+        # We want the LAST N messages, not the first N
+        messages_to_summarize = messages_to_summarize[-message_count:]
         
         if not messages_to_summarize:
             await send_message(chat_guid, f"📖 All of the recent messages are from you! Nothing new to recap.")
